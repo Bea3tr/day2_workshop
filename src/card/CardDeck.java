@@ -15,11 +15,10 @@ public class CardDeck {
         1, 2, 3, 4, 5, 6, 7, 
         8, 9, 10, 10, 10, 10
     };
-    protected Card[] cards;
+    protected List<Card> cards;
 
     public CardDeck() {
-        cards = new Card[52];
-        int idx = 0;
+        cards = new LinkedList<Card>();
         for (int s = 0; s < SUIT.length; s++) {
             String suit = SUIT[s];
 
@@ -28,8 +27,7 @@ public class CardDeck {
                 int value = VALUE[n];
 
                 Card card = new Card(suit, name, value);
-                cards[idx] = card;
-                idx++;
+                cards.add(card);
             }
         }
     }
@@ -38,10 +36,10 @@ public class CardDeck {
         return this.get(0);
     }
     public Card get(int pos) {
-        return this.cards[pos];
+        return this.cards.get(pos);
     }
 
-    public Card[] shuffle(Card[] cards) {
+    public List<Card> shuffle(List<Card> cards) {
 
         /* Using Collections.shuffle 
          * List<Card> cardsList = Arrays.asList(cards);
@@ -50,16 +48,16 @@ public class CardDeck {
         */
         
         Random rand = new SecureRandom();
-        Card[] shuffledDeck = new Card[52];
+        List<Card> shuffledDeck = new LinkedList<Card>();
         ArrayList<Integer> randList = new ArrayList<Integer>();
         
-        for (int i = 0; i < cards.length; i++) {
-            int idx = rand.nextInt(cards.length);
+        for (int i = 0; i < cards.size(); i++) {
+            int idx = rand.nextInt(cards.size());
             while (randList.contains(idx)){
-                idx = rand.nextInt(cards.length);
+                idx = rand.nextInt();
             }
             randList.add(idx);
-            shuffledDeck[i] = cards[idx];
+            shuffledDeck.add(cards.get(idx));
         }
         return shuffledDeck;
     }
